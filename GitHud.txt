@@ -1,0 +1,69 @@
+GitHud
+Spirosanathema
+Spirosanathema@hotmail.com
+myhm3n0s8
+
+Just install the official Git software for your platform: Git - Downloads
+
+Your Eclipse project is just a folder structure on your hard drive. Locate it. Open a terminal in this location (the root folder of your project) and init a new Git repo:
+
+    $ git init
+
+Create a new repo on Github. Eventually import any SSH keys in Github (it’s found in your settings there).
+
+Set up your local repo to track the remote repo by simply following the instructions on Github (I’ll put them also here):
+
+    $ git remote add origin git@github.com:<username>/<reponame>.git 
+    $ git push -u origin master
+
+That’s it.
+
+Every time you want to push your local changes to your remote repo you do:
+
+    $ git add <filenames>
+    $ git commit -m 'commit message'
+    $ git push origin master
+
+As long as you don’t use any other branches (which I do not assume in this example) you just push to the master branch.
+
+This will also provide you some insights in the functionality of Git which will be hidden when using a plugin or some visual clients.
+
+Replace <username> with your Github username and <reponame> with your repository name on Github (but these values should be prefilled by Github there).
+
+Remember to never put any sensitive and confidential data on remote repos (like personal keys, passwords, etc.)!
+
+
+------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Initialize the local directory as a Git repository.
+git init
+Add the files in your new local repository. This stages them for the first commit.
+git add .
+# Adds the files in the local repository and stages them for commit. To unstage a file, use 'git reset HEAD YOUR-FILE'.
+Commit the files that you've staged in your local repository.
+git commit -m "First commit" (or "initial commit")
+# Commits the tracked changes and prepares them to be pushed to a remote repository. To remove this commit and modify the file, use 'git reset --soft HEAD~1' and commit and add the file again.
+Copy remote repository URL fieldAt the top of your GitHub repository's Quick Setup page, click
+to copy the remote repository URL.
+In the Command prompt, add the URL for the remote repository where your local repository will be pushed.
+git remote add origin remote repository URL
+# Sets the new remote
+git remote -v
+# Verifies the new remote URL
+Push the changes in your local repository to GitHub.
+git push origin master
+# Pushes the changes in your local repository up to the remote repository you specified as the origin
+
+
+====================================== SPIROS LATEST ===========================================
+git init
+git add .
+git commit -m "First commit"
+git remote -v
+git remote add origin https://github.com/Spirosanathema/Incorruptiblator.git
+git push -u origin master
+
+Every time you want to push your local changes to your remote repo you do:
+git add .
+git commit -m "First commit"
+git push origin master
