@@ -45,6 +45,7 @@ public class Screen0 extends GraniteScreen{
 		player = new Sprite(playerTex);
 		player.setPosition(0, 16);
 		
+		// LOLADIN!!!
 		//cam = new OrthographicCamera(Gdx.graphics.getWidth() /2, Gdx.graphics.getHeight() /2);
 		cam = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		cam.position.set(cam.viewportWidth /2, cam.viewportHeight /2, 0);
