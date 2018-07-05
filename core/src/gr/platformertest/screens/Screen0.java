@@ -86,8 +86,10 @@ public class Screen0 extends GraniteScreen{
 
 	@Override
 	public void dispose() {
-		
-		
+		for(int i=0; i<bgTextures.size; i++) {
+			bgTextures.get(i).dispose();
+		}
+		playerTex.dispose();
 	}
 
 	@Override

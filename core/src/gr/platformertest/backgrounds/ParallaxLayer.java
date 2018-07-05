@@ -27,6 +27,7 @@ public class ParallaxLayer {
 	        this.parallaxRatio = parallaxRatio;
 	        this.startPosition = startPosition;
 	        this.padding = padding;
-	    }	
+	    }
+	    public TextureRegion getTexture() { return region; }
 	
 }//END

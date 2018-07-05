@@ -21,7 +21,7 @@ public class ParallaxBackground {
         this.layers = layers;
         this.speed.set(speed);
         camera = new OrthographicCamera(width, height);
-        //batch = new SpriteBatch();
+        //this.batch = new SpriteBatch();
         this.batch = batch;
     }
 
@@ -53,7 +53,7 @@ public class ParallaxBackground {
     public void setBackgroundSpeed(Vector2 speed) {
     	this.speed = speed;
     }
-    public void setBackgroundSpeed(int x, int y) {
+    public void setBackgroundSpeed(float x, float y) {
     	this.speed.x = x;
     	this.speed.y = y;
     }

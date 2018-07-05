@@ -50,6 +50,10 @@ public class MyGame extends ApplicationAdapter {	//700 x 400
 		screenManager.dispose();
 		batch.dispose();
 	}
+	@Override
+	public void resize(int width, int height) {
+		screenManager.resize(width, height);
+	}
 	
 	/////////////////////////////// GETTERS - SETTERS //////////////////////////////////////
 	public SpriteBatch getSpiteBatch() { return batch; }
