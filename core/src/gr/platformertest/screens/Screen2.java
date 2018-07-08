@@ -35,8 +35,9 @@ public class Screen2 extends GraniteScreen{
 	private float playerSpeed;
 	private float bgStep;	// How far from  left bg has gone
 	private float lerp;
+	private float HMovement, VMovement;
 	
-	private final float GRAVITY = -9.81f;
+	private final float GRAVITY = 0f;
 	private final float V_HEIGHT = 4f;
 	
 	private ParallaxLayer plOne, plTwo, plThree, plFour;
@@ -64,9 +65,12 @@ public class Screen2 extends GraniteScreen{
 		player.setSize(.4f, .6f);
 		player.setOriginCenter();
 		
-		playerSpeed = 5f;
+		playerSpeed = 3f;
 		bgStep = 0;
 		lerp = .1f;
+		
+		HMovement = 0;
+		VMovement = 0;
 		
 		// Potato Pixels for camera: VIRTUAL_HEIGHT * width / (float)height
 		cam = new OrthographicCamera((V_HEIGHT * Gdx.graphics.getWidth()) /Gdx.graphics.getHeight(), V_HEIGHT);
@@ -78,7 +82,7 @@ public class Screen2 extends GraniteScreen{
 		world = new World(new Vector2(0, GRAVITY), false);
 		b2drenderer = new Box2DDebugRenderer();
 		
-		playerBody = MyBox2DManager.createPolygonBody(true, 0, 0, player.getWidth(), player.getHeight(), world, b2drenderer);
+		playerBody = MyBox2DManager.createPolygonBody(false, player.getX(), player.getY(), player.getWidth(), player.getHeight(), world, b2drenderer);
 		
 		Gdx.input.setInputProcessor(new MyInputManager());
 	}
@@ -86,16 +90,18 @@ public class Screen2 extends GraniteScreen{
 	@Override
 	public void update(float dt) {
 		world.step(STEP, 6, 2);
-		cam.update();
 		handlePlayerInput(dt);
 		handleCameraPosition(dt);
 		
+		cam.update();	// ALWAYS last on the list!
 		
 //		System.out.println("bgCam = " + background.getCamera().position.x);
 //		System.out.println("bgStep = " + bgStep);
 //		System.out.println("player camera = " + player.getX());
 //		System.out.println("camera X = " + cam.position.x);
 //		System.out.println("\n");
+		System.out.println(" playerBody = "+playerBody.getPosition().x);
+		System.out.println(" player = "+player.getX() + "\n");
 	}
 
 	@Override
@@ -115,12 +121,13 @@ public class Screen2 extends GraniteScreen{
 		
 		player.setColor(player.getColor());
 		player.setAlpha(.31f);
-//		if(player.getX() <= 5)			//We put this trick in render method so player stays at pixel 5;
-//			player.setX(5);
-		sb.draw(player, player.getX(), player.getY(), player.getWidth(), player.getHeight());
-		//sb.draw(player, 0, 0, .8f, 1.1f);
+
+		//(playerBody.getTransform().getRotation() * 180 / (float)Math.PI)			
+		//sb.draw(player, playerBody.getPosition().x - player.getWidth() /2, playerBody.getPosition().y - player.getHeight() /2, player.getWidth(), player.getHeight());
+		//sb.draw(player, player.getX(), player.getY(), player.getWidth(), player.getHeight());
+		sb.draw(player, player.getX(), player.getY(), player.getWidth() /2, player.getHeight() /2, player.getWidth(), player.getHeight(), 1, 1,
+				(playerBody.getTransform().getRotation() * 180 / (float)Math.PI));
 		
-		//player.draw(sb);
 	}
 
 	@Override
@@ -144,27 +151,37 @@ public class Screen2 extends GraniteScreen{
 	
 	// Handle input
 	private void handlePlayerInput(float dt) {
+		
 		background.setBackgroundSpeed(0, 0);
-		player.translate(0, 0);
+		player.setPosition(playerBody.getPosition().x  - player.getWidth() /2, playerBody.getPosition().y - player.getHeight() /2);
 		
 		if(MyInputs.isMyKeyDown(MyInputs.RIGHT_KEY)) {
-			player.translate(playerSpeed * dt, 0);
+			HMovement = playerSpeed;
+		}		
+		else if(MyInputs.isMyKeyDown(MyInputs.LEFT_KEY)) {
+			HMovement = -playerSpeed;
 		}
-		if(MyInputs.isMyKeyDown(MyInputs.LEFT_KEY)) {
-			player.translate(-playerSpeed * dt, 0);
+		else
+			HMovement = 0;
+		
+		playerBody.setLinearVelocity(2f * HMovement, 0);
+		playerBody.applyForceToCenter(playerBody.getLinearVelocity().x, 0, true);
+		
+		if(player.getX() <0) {
+			player.setX(0);
+			playerBody.setTransform(player.getWidth() /2, player.getHeight() /2, (float)Math.toRadians(45));
 		}
 	}
 	
 	// Handle Camera
 	// LERP=======> cam.pos = cam.pos + (player.pos - cam.pos) * lerp	
 	private void handleCameraPosition(float dt) {
-		
 		if(player.getX() > cam.viewportWidth /2) {
 			cam.position.x = player.getX();
-			background.setCameraPos(background.getCamera().position.x + ((player.getX() - cam.viewportWidth /2) /10 - background.getCamera().position.x) * lerp , 0);
+			background.setCameraPos(background.getCamera().position.x + ((player.getX() - cam.viewportWidth /2) * 8f - background.getCamera().position.x) * lerp , 0);
 		}
 			
 		else
-			cam.position.x = Gdx.graphics.getWidth() /2;		
+			cam.position.x = cam.viewportWidth /2;		
 	}	
 }// END

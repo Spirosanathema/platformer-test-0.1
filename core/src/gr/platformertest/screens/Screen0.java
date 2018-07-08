@@ -61,11 +61,12 @@ public class Screen0 extends GraniteScreen{
 
 	@Override
 	public void update(float dt) {
-		cam.update();
 		currentFrame = Math.abs((int)(player.getX() + player.getWidth() /2) / 700);
 		handleCameraPosition(dt);
 		handleInput(dt);
 		cameraTransition(dt);
+		
+		cam.update();
 	}
 
 	@Override
@@ -94,10 +95,10 @@ public class Screen0 extends GraniteScreen{
 
 	@Override
 	public void resize(int width, int height) {
-		cam.viewportWidth = width;
-		cam.viewportHeight = height;
-		cam.position.set(cam.viewportWidth /2, cam.viewportHeight /2, 0);
-		cam.update();
+//		cam.viewportWidth = width;
+//		cam.viewportHeight = height;
+//		cam.position.set(cam.viewportWidth /2, cam.viewportHeight /2, 0);
+//		cam.update();
 	}
 	
 	// Handle input

@@ -116,7 +116,6 @@ public class ScreenManager {
 	}
 	
 	public void resize(int width, int height) {
-		System.out.println("pare me mazi sou SM");
 		screens.peek().resize(width, height);
 	}
 	
